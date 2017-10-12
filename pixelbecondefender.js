@@ -1,19 +1,19 @@
 // ==UserScript==
-// @name         Pixel Bot 2ch
+// @name         Pixel Bot Becon
 // @namespace    http://tampermonkey.net/
 // @version      1.1.45
 // @description  try to take over the world!
-// @author       Flyink13, DarkKeks, xi
+// @author       Flyink13, DarkKeks, xi, PashaPechkin
 // @match        https://pixel.vkforms.ru/*
-// @downloadURL  https://raw.githubusercontent.com/Extered/pixwars/master/PixelDefender.js
-// @updateURL    https://raw.githubusercontent.com/Extered/pixwars/master/PixelDefender.js
+// @downloadURL  https://raw.githubusercontent.com/PashaPechkin/beacondefender/master/pixelbecondefender.js
+// @updateURL    https://raw.githubusercontent.com/PashaPechkin/beacondefender/master/pixelbecondefender.js
 // @grant        none
 // ==/UserScript==
 
 function MyAwesomePixelBot() {
     window.MyAwesomePixelBot = MyAwesomePixelBot;
     MyAwesomePixelBot.url = {
-        script: 'https://raw.githubusercontent.com/Extered/pixwars/master/PixelDefender.js'
+        script: 'https://raw.githubusercontent.com/PashaPechkin/beacondefender/master/pixelbecondefender.js'
     };
     MyAwesomePixelBot.refreshTime = 300;
     MyAwesomePixelBot.pts = 30;
