@@ -22,6 +22,6 @@ pixelbatlebot
 https://raw.githubusercontent.com/PashaPechkin/beacondefender/master/pixelbecondefender.js
 Сохраняем!
 
-7. https://vk.com/app5990572_-22751485.
+7. https://vk.cc/7cScU3
 
 Если хотите "Поставил и забыл" - ставьте второй скрипт, периодически обновляет страницу. https://raw.githubusercontent.com/PashaPechkin/beacondefender/master/reload.js
