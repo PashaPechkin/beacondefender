@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name         Pixel Bot Beacon
 // @namespace    http://tampermonkey.net/
-// @version      2.1
+// @version      1.4.88
 // @description  try to take over the world!
-// @author       Flyink13, DarkKeks
+// @author       Flyink13, DarkKeks, xi
 // @match        https://pixel.vkforms.ru/*
 // @downloadURL  https://raw.githubusercontent.com/PashaPechkin/beacondefender/master/pixelbecondefender.js
 // @updateURL    https://raw.githubusercontent.com/PashaPechkin/beacondefender/master/pixelbecondefender.js
@@ -12,10 +12,9 @@
 
 function BeaconPixelBot() {
     window.BeaconPixelBot = BeaconPixelBot;
-
     BeaconPixelBot.url = {
-        script: 'https://raw.githubusercontent.com/PashaPechkin/beacondefender/master/pixelbecondefender.js',
-     };
+        script: 'https://raw.githubusercontent.com/PashaPechkin/beacondefender/master/pixelbecondefender.js'
+    };
     BeaconPixelBot.refreshTime = 300;
     BeaconPixelBot.pts = 30;
     BeaconPixelBot.tc = "rgb(0, 0, 0)";
@@ -103,12 +102,16 @@ function BeaconPixelBot() {
         if (!BeaconPixelBot.canvas)
             return;
         if (type == "mousewheel") {
-            BeaconPixelBot.canvas.dispatchEvent(new WheelEvent("mousewheel",q))
+            BeaconPixelBot.canvas.dispatchEvent(new WheelEvent("mousewheel",q));
         } else {
-            BeaconPixelBot.canvas.dispatchEvent(new MouseEvent(type,q))
+            BeaconPixelBot.canvas.dispatchEvent(new MouseEvent(type,q));
         }
     }
     ;
+
+    BeaconPixelBot.parseRgb = function(rgb) {
+        return rgb.replace('rgb(', '').replace(')', '').split(', ').map(function(e){return +e;});
+    };
     BeaconPixelBot.canvasClick = function(x, y, color) {
         BeaconPixelBot.resetZoom();
         if (x > 1590) {
@@ -127,7 +130,21 @@ function BeaconPixelBot() {
             layerY: y + 1
         };
         var pxColor = BeaconPixelBot.getColor(BeaconPixelBot.ctx.getImageData(x, y + 1, 1, 1).data, 0);
-        var colorEl = document.querySelector('[style="background-color: ' + color + ';"]');
+        var colors = document.getElementsByClassName('color');
+        var colorEl = null;
+        var mindelta = 999999;
+        if (colors.length == 0) {
+            return;
+        }
+        for (var i = 0; i < colors.length; i++) {
+            var colorElRgb = BeaconPixelBot.parseRgb(colors[i].style.backgroundColor);
+            var neededRgb = BeaconPixelBot.parseRgb(color);
+            var delta = Math.abs(colorElRgb[0] - neededRgb[0]) + Math.abs(colorElRgb[1] - neededRgb[1]) + Math.abs(colorElRgb[2] - neededRgb[2]);
+            if (delta < mindelta) {
+                mindelta = delta;
+                colorEl = colors[i];
+            };
+        }
         if (!colorEl) {
             console.log("color error %c " + color, 'background:' + color + ';');
             BeaconPixelBot.setState("Ошибка подбора цвета " + color);
@@ -155,7 +172,7 @@ function BeaconPixelBot() {
         BeaconPixelBot.canvasEvent("click", q);
         q.button = 0;
         BeaconPixelBot.canvasEvent("mouseup", q);
-        document.querySelector(".App__confirm button").click()
+        document.getElementsByTagName('button')[0].click()
     }
     ;
     BeaconPixelBot.draw = function() {
@@ -238,7 +255,7 @@ function BeaconPixelBot() {
             deltaX: 0,
             clientX: 100,
             clientY: 100,
-        })
+        });
     };
 
     BeaconPixelBot.init = function() {
@@ -282,6 +299,7 @@ function BeaconPixelBot() {
         BeaconPixelBot.loger.outerHTML = "";
         clearInterval(BeaconPixelBot.wait);
         var script = document.createElement('script');
+        script.type = 'application/javascript';
         script.src = BeaconPixelBot.urlGen.script();
         document.body.appendChild(script)
     };
