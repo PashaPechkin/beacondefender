@@ -1,12 +1,12 @@
 // ==UserScript==
-// @name         Pixel Bot 2ch
+// @name         Pixel Bot Beacon
 // @namespace    http://tampermonkey.net/
 // @version      2.1
 // @description  try to take over the world!
 // @author       Flyink13, DarkKeks
 // @match        https://pixel.vkforms.ru/*
-// @downloadURL  https://drive.google.com/uc?export=download&confirm=no_antivirus&id=0B3tijp3qx-9NSXdEWEoyTF9iMmc
-// @updateURL    https://drive.google.com/uc?export=download&confirm=no_antivirus&id=0B3tijp3qx-9NSXdEWEoyTF9iMmc
+// @downloadURL  https://raw.githubusercontent.com/PashaPechkin/beacondefender/master/pixelbecondefender.js
+// @updateURL    https://raw.githubusercontent.com/PashaPechkin/beacondefender/master/pixelbecondefender.js
 // @grant        none
 // ==/UserScript==
 
