@@ -1,28 +1,29 @@
 // ==UserScript==
-// @name         Pixel Bot Becon
+// @name         Pixel Bot 2ch
 // @namespace    http://tampermonkey.net/
-// @version      1.1.45
+// @version      2.1
 // @description  try to take over the world!
-// @author       Flyink13, DarkKeks, xi, PashaPechkin
+// @author       Flyink13, DarkKeks
 // @match        https://pixel.vkforms.ru/*
-// @downloadURL  https://raw.githubusercontent.com/PashaPechkin/beacondefender/master/pixelbecondefender.js
-// @updateURL    https://raw.githubusercontent.com/PashaPechkin/beacondefender/master/pixelbecondefender.js
+// @downloadURL  https://drive.google.com/uc?export=download&confirm=no_antivirus&id=0B3tijp3qx-9NSXdEWEoyTF9iMmc
+// @updateURL    https://drive.google.com/uc?export=download&confirm=no_antivirus&id=0B3tijp3qx-9NSXdEWEoyTF9iMmc
 // @grant        none
 // ==/UserScript==
 
-function MyAwesomePixelBot() {
-    window.MyAwesomePixelBot = MyAwesomePixelBot;
-    MyAwesomePixelBot.url = {
-        script: 'https://raw.githubusercontent.com/PashaPechkin/beacondefender/master/pixelbecondefender.js'
-    };
-    MyAwesomePixelBot.refreshTime = 300;
-    MyAwesomePixelBot.pts = 30;
-    MyAwesomePixelBot.tc = "rgb(0, 0, 0)";
-    MyAwesomePixelBot.doCoordLog = true;
-    MyAwesomePixelBot.currentUrl = '';
-    MyAwesomePixelBot.urlGen = {
+function BeaconPixelBot() {
+    window.BeaconPixelBot = BeaconPixelBot;
+
+    BeaconPixelBot.url = {
+        script: 'https://raw.githubusercontent.com/PashaPechkin/beacondefender/master/pixelbecondefender.js',
+     };
+    BeaconPixelBot.refreshTime = 300;
+    BeaconPixelBot.pts = 30;
+    BeaconPixelBot.tc = "rgb(0, 0, 0)";
+    BeaconPixelBot.doCoordLog = true;
+    BeaconPixelBot.currentUrl = '';
+    BeaconPixelBot.urlGen = {
         script: function() {
-            return MyAwesomePixelBot.url.script + '?v=' + Math.random()
+            return BeaconPixelBot.url.script + '?v=' + Math.random()
         },
         image: function() {
             return new Promise(function(resolve, reject) {
@@ -30,20 +31,20 @@ function MyAwesomePixelBot() {
                         data.json().then(function(answer){
                             resolve(answer.currentTarget);
                         }).catch(function(e) {
-                            MyAwesomePixelBot.state.textContent = "E120: " + e;
+                            BeaconPixelBot.state.textContent = "E120: " + e;
                             reject();
                         });
                 }).catch(function(e){
-                    MyAwesomePixelBot.state.textContent = "E121: " + e;
-                    resolve(MyAwesomePixelBot.currentUrl);
+                    BeaconPixelBot.state.textContent = "E121: " + e;
+                    resolve(BeaconPixelBot.currentUrl);
                 });
             });
         }
     };
-    MyAwesomePixelBot.state = document.createElement("div");
-    MyAwesomePixelBot.state.onclick = MyAwesomePixelBot.reload;
-    MyAwesomePixelBot.state.textContent = "Загрузка приложения...";
-    Object.assign(MyAwesomePixelBot.state.style, {
+    BeaconPixelBot.state = document.createElement("div");
+    BeaconPixelBot.state.onclick = BeaconPixelBot.reload;
+    BeaconPixelBot.state.textContent = "Загрузка приложения...";
+    Object.assign(BeaconPixelBot.state.style, {
         background: "rgba(0,0,0,0.5)",
         bottom: "0px",
         right: "0px",
@@ -55,10 +56,10 @@ function MyAwesomePixelBot() {
         position: "fixed",
         zIndex: 10000
     });
-    document.body.appendChild(MyAwesomePixelBot.state);
-    MyAwesomePixelBot.loger = document.createElement("div");
-    MyAwesomePixelBot.loger.onclick = MyAwesomePixelBot.reload;
-    Object.assign(MyAwesomePixelBot.loger.style, {
+    document.body.appendChild(BeaconPixelBot.state);
+    BeaconPixelBot.loger = document.createElement("div");
+    BeaconPixelBot.loger.onclick = BeaconPixelBot.reload;
+    Object.assign(BeaconPixelBot.loger.style, {
         background: "rgba(0,0,0,0)",
         top: "0px",
         left: "0px",
@@ -71,50 +72,50 @@ function MyAwesomePixelBot() {
         padding: "12px",
         zIndex: 10001
     });
-    document.body.appendChild(MyAwesomePixelBot.loger);
-    MyAwesomePixelBot.log = function(x) {
-        MyAwesomePixelBot.loger.innerHTML += x + "<br>";
-        MyAwesomePixelBot.loger.scrollTo(0, 10000)
+    document.body.appendChild(BeaconPixelBot.loger);
+    BeaconPixelBot.log = function(x) {
+        BeaconPixelBot.loger.innerHTML += x + "<br>";
+        BeaconPixelBot.loger.scrollTo(0, 10000)
     }
     ;
-    MyAwesomePixelBot.setState = function(s) {
-        MyAwesomePixelBot.state.innerHTML = "MyAwesomePixelBot " + s;
-        MyAwesomePixelBot.log(s)
+    BeaconPixelBot.setState = function(s) {
+        BeaconPixelBot.state.innerHTML = "BeaconPixelBot " + s;
+        BeaconPixelBot.log(s)
     }
     ;
-    MyAwesomePixelBot.reloadImage = function() {
-        MyAwesomePixelBot.urlGen.image().then(function(url) {
-            if (!MyAwesomePixelBot.img) {
-                MyAwesomePixelBot.img = new Image();
-                MyAwesomePixelBot.img.crossOrigin = "Anonymous";
-                MyAwesomePixelBot.img.onload = function() {
-                    MyAwesomePixelBot.setState("перезагрузил зону защиты.");
-                    if (MyAwesomePixelBot.inited) MyAwesomePixelBot.getFullData();
+    BeaconPixelBot.reloadImage = function() {
+        BeaconPixelBot.urlGen.image().then(function(url) {
+            if (!BeaconPixelBot.img) {
+                BeaconPixelBot.img = new Image();
+                BeaconPixelBot.img.crossOrigin = "Anonymous";
+                BeaconPixelBot.img.onload = function() {
+                    BeaconPixelBot.setState("перезагрузил зону защиты.");
+                    if (BeaconPixelBot.inited) BeaconPixelBot.getFullData();
                 };
             }
-            if (url != MyAwesomePixelBot.currentUrl) {
-                MyAwesomePixelBot.img.src = url;
-                MyAwesomePixelBot.currentUrl = url;
+            if (url != BeaconPixelBot.currentUrl) {
+                BeaconPixelBot.img.src = url;
+                BeaconPixelBot.currentUrl = url;
             }
         });
     };
-    MyAwesomePixelBot.canvasEvent = function(type, q) {
-        if (!MyAwesomePixelBot.canvas)
+    BeaconPixelBot.canvasEvent = function(type, q) {
+        if (!BeaconPixelBot.canvas)
             return;
         if (type == "mousewheel") {
-            MyAwesomePixelBot.canvas.dispatchEvent(new WheelEvent("mousewheel",q))
+            BeaconPixelBot.canvas.dispatchEvent(new WheelEvent("mousewheel",q))
         } else {
-            MyAwesomePixelBot.canvas.dispatchEvent(new MouseEvent(type,q))
+            BeaconPixelBot.canvas.dispatchEvent(new MouseEvent(type,q))
         }
     }
     ;
-    MyAwesomePixelBot.canvasClick = function(x, y, color) {
-        MyAwesomePixelBot.resetZoom();
+    BeaconPixelBot.canvasClick = function(x, y, color) {
+        BeaconPixelBot.resetZoom();
         if (x > 1590) {
-            MyAwesomePixelBot.canvasMoveTo(1590, 0);
+            BeaconPixelBot.canvasMoveTo(1590, 0);
             x = x - 1590
         } else {
-            MyAwesomePixelBot.canvasMoveTo(0, 0)
+            BeaconPixelBot.canvasMoveTo(0, 0)
         }
         var q = {
             bubbles: true,
@@ -125,48 +126,48 @@ function MyAwesomePixelBot() {
             layerX: x,
             layerY: y + 1
         };
-        var pxColor = MyAwesomePixelBot.getColor(MyAwesomePixelBot.ctx.getImageData(x, y + 1, 1, 1).data, 0);
+        var pxColor = BeaconPixelBot.getColor(BeaconPixelBot.ctx.getImageData(x, y + 1, 1, 1).data, 0);
         var colorEl = document.querySelector('[style="background-color: ' + color + ';"]');
         if (!colorEl) {
             console.log("color error %c " + color, 'background:' + color + ';');
-            MyAwesomePixelBot.setState("Ошибка подбора цвета " + color);
+            BeaconPixelBot.setState("Ошибка подбора цвета " + color);
             return
         } else if (pxColor == color) {
-            if (MyAwesomePixelBot.doCoordLog) {
+            if (BeaconPixelBot.doCoordLog) {
                 console.log("== " + x + "x" + y + "%c " + pxColor, 'background:' + pxColor + ';');
-                MyAwesomePixelBot.setState("Пропускаю " + (x + 1) + "x" + (y + 1) + " совпал цвет")
+                BeaconPixelBot.setState("Пропускаю " + (x + 1) + "x" + (y + 1) + " совпал цвет")
             } else {
                 console.log("==");
-                MyAwesomePixelBot.setState("Пропускаю, совпал цвет")
+                BeaconPixelBot.setState("Пропускаю, совпал цвет")
             }
             return
         } else {
-            if (MyAwesomePixelBot.doCoordLog) {
+            if (BeaconPixelBot.doCoordLog) {
                 console.log(x + "x" + y + "%c " + pxColor + " -> %c " + color, 'background:' + pxColor + ';', 'background:' + color + ';');
-                MyAwesomePixelBot.setState("Поставил точку " + (x + 1) + "x" + (y + 1))
+                BeaconPixelBot.setState("Поставил точку " + (x + 1) + "x" + (y + 1))
             } else {
                 console.log(" -> ");
-                MyAwesomePixelBot.setState("Поставил точку")
+                BeaconPixelBot.setState("Поставил точку")
             }
         }
         colorEl.click();
-        MyAwesomePixelBot.canvasEvent("mousedown", q);
-        MyAwesomePixelBot.canvasEvent("click", q);
+        BeaconPixelBot.canvasEvent("mousedown", q);
+        BeaconPixelBot.canvasEvent("click", q);
         q.button = 0;
-        MyAwesomePixelBot.canvasEvent("mouseup", q);
+        BeaconPixelBot.canvasEvent("mouseup", q);
         document.querySelector(".App__confirm button").click()
     }
     ;
-    MyAwesomePixelBot.draw = function() {
-        var px = MyAwesomePixelBot.pixs.shift();
+    BeaconPixelBot.draw = function() {
+        var px = BeaconPixelBot.pixs.shift();
         if (!px) {
-            MyAwesomePixelBot.setState("Точек нет")
+            BeaconPixelBot.setState("Точек нет")
         } else {
-            MyAwesomePixelBot.canvasClick(px[0], px[1], px[2])
+            BeaconPixelBot.canvasClick(px[0], px[1], px[2])
         }
     }
     ;
-    MyAwesomePixelBot.canvasMove = function(x, y) {
+    BeaconPixelBot.canvasMove = function(x, y) {
         var q = {
             bubbles: true,
             cancelable: true,
@@ -174,52 +175,52 @@ function MyAwesomePixelBot() {
             clientX: 0,
             clientY: 0
         };
-        MyAwesomePixelBot.canvasEvent("mousedown", q);
+        BeaconPixelBot.canvasEvent("mousedown", q);
         q.clientY = y;
         q.clientX = x;
-        MyAwesomePixelBot.canvasEvent("mousemove", q);
-        MyAwesomePixelBot.canvasEvent("mouseup", q)
+        BeaconPixelBot.canvasEvent("mousemove", q);
+        BeaconPixelBot.canvasEvent("mouseup", q)
     }
     ;
-    MyAwesomePixelBot.canvasMoveTo = function(x, y) {
-        MyAwesomePixelBot.canvasMove(10000, 10000);
-        MyAwesomePixelBot.canvasMove(-40 - x, -149 - y)
+    BeaconPixelBot.canvasMoveTo = function(x, y) {
+        BeaconPixelBot.canvasMove(10000, 10000);
+        BeaconPixelBot.canvasMove(-40 - x, -149 - y)
     }
     ;
-    MyAwesomePixelBot.getImageData = function() {
-        var data = MyAwesomePixelBot.ctx.getImageData(0, 1, 1590, 400).data;
+    BeaconPixelBot.getImageData = function() {
+        var data = BeaconPixelBot.ctx.getImageData(0, 1, 1590, 400).data;
         return data
     }
     ;
-    MyAwesomePixelBot.getColor = function(data, i) {
+    BeaconPixelBot.getColor = function(data, i) {
         return "rgb(" + data[i] + ", " + data[i + 1] + ", " + data[i + 2] + ")"
     }
     ;
-    MyAwesomePixelBot.getFullData = function() {
-        MyAwesomePixelBot.pixs = [];
-        MyAwesomePixelBot.pixs = MyAwesomePixelBot.randomShuffle(MyAwesomePixelBot.getData(0));
-        MyAwesomePixelBot.setState("осталось точек:" + MyAwesomePixelBot.pixs.length);
-        return MyAwesomePixelBot.pixs.length
+    BeaconPixelBot.getFullData = function() {
+        BeaconPixelBot.pixs = [];
+        BeaconPixelBot.pixs = BeaconPixelBot.randomShuffle(BeaconPixelBot.getData(0));
+        BeaconPixelBot.setState("осталось точек:" + BeaconPixelBot.pixs.length);
+        return BeaconPixelBot.pixs.length
     }
     ;
-    MyAwesomePixelBot.getData = function(offsetX) {
-        MyAwesomePixelBot.resetZoom();
-        MyAwesomePixelBot.canvasMoveTo(offsetX, 0);
-        var id1 = MyAwesomePixelBot.getImageData();
-        MyAwesomePixelBot.ctx.drawImage(MyAwesomePixelBot.img, -offsetX, 1);
-        var id2 = MyAwesomePixelBot.getImageData();
+    BeaconPixelBot.getData = function(offsetX) {
+        BeaconPixelBot.resetZoom();
+        BeaconPixelBot.canvasMoveTo(offsetX, 0);
+        var id1 = BeaconPixelBot.getImageData();
+        BeaconPixelBot.ctx.drawImage(BeaconPixelBot.img, -offsetX, 1);
+        var id2 = BeaconPixelBot.getImageData();
         var data = [];
         for (var i = 0; i < id1.length; i += 4) {
             var x = offsetX + (i / 4) % 1590
               , y = ~~((i / 4) / 1590);
-            if (MyAwesomePixelBot.getColor(id1, i) !== MyAwesomePixelBot.getColor(id2, i) && MyAwesomePixelBot.getColor(id2, i) !== MyAwesomePixelBot.tc) {
-                data.push([x, y, MyAwesomePixelBot.getColor(id2, i), MyAwesomePixelBot.getColor(id1, i)])
+            if (BeaconPixelBot.getColor(id1, i) !== BeaconPixelBot.getColor(id2, i) && BeaconPixelBot.getColor(id2, i) !== BeaconPixelBot.tc) {
+                data.push([x, y, BeaconPixelBot.getColor(id2, i), BeaconPixelBot.getColor(id1, i)])
             }
         }
         return data
     };
 
-    MyAwesomePixelBot.randomShuffle = function(data) {
+    BeaconPixelBot.randomShuffle = function(data) {
         var currentIndex = data.length, temporaryValue, randomIndex;
         while (0 !== currentIndex) {
             randomIndex = Math.floor(Math.random() * currentIndex);
@@ -231,8 +232,8 @@ function MyAwesomePixelBot() {
         return data
     };
 
-    MyAwesomePixelBot.resetZoom = function() {
-        MyAwesomePixelBot.canvasEvent("mousewheel", {
+    BeaconPixelBot.resetZoom = function() {
+        BeaconPixelBot.canvasEvent("mousewheel", {
             deltaY: 100000,
             deltaX: 0,
             clientX: 100,
@@ -240,62 +241,62 @@ function MyAwesomePixelBot() {
         })
     };
 
-    MyAwesomePixelBot.init = function() {
-        MyAwesomePixelBot.inited = 1;
-        MyAwesomePixelBot.getFullData();
-        MyAwesomePixelBot.setState("Запущен.")
+    BeaconPixelBot.init = function() {
+        BeaconPixelBot.inited = 1;
+        BeaconPixelBot.getFullData();
+        BeaconPixelBot.setState("Запущен.")
     };
 
-    MyAwesomePixelBot.wait = setInterval(function() {
+    BeaconPixelBot.wait = setInterval(function() {
         if (window.localStorage.getItem('DROP_FIRST_TIME') != '1') {
             document.querySelector(".App__advance > .Button.primary").click();
         } else if (window.localStorage.getItem('DROP_HEADER') != '1') {
             document.querySelector(".Header__close").click();
-        } else if (!MyAwesomePixelBot.inited && MyAwesomePixelBot.canvas) {
-            MyAwesomePixelBot.ctx = MyAwesomePixelBot.canvas.getContext("2d");
-            MyAwesomePixelBot.init()
-        } else if (MyAwesomePixelBot.canvas && document.querySelector(".Ttl__wait")) {
-            MyAwesomePixelBot.timer = 1
-        } else if (!MyAwesomePixelBot.canvas) {
+        } else if (!BeaconPixelBot.inited && BeaconPixelBot.canvas) {
+            BeaconPixelBot.ctx = BeaconPixelBot.canvas.getContext("2d");
+            BeaconPixelBot.init()
+        } else if (BeaconPixelBot.canvas && document.querySelector(".Ttl__wait")) {
+            BeaconPixelBot.timer = 1
+        } else if (!BeaconPixelBot.canvas) {
             var all = document.querySelectorAll("canvas");
             for(var i = 0; i < all.length; ++i) {
                 if(all[i].style.display != 'none') {
-                    MyAwesomePixelBot.canvas = all[i];
+                    BeaconPixelBot.canvas = all[i];
                 }
             }
-        } else if (!MyAwesomePixelBot.pts) {
-            MyAwesomePixelBot.reload();
-            MyAwesomePixelBot.pts = 30
-        } else if (MyAwesomePixelBot.inited && MyAwesomePixelBot.canvas) {
-            MyAwesomePixelBot.pts--;
-            MyAwesomePixelBot.draw()
+        } else if (!BeaconPixelBot.pts) {
+            BeaconPixelBot.reload();
+            BeaconPixelBot.pts = 30
+        } else if (BeaconPixelBot.inited && BeaconPixelBot.canvas) {
+            BeaconPixelBot.pts--;
+            BeaconPixelBot.draw()
         }
     }, 1000);
 
-    MyAwesomePixelBot.refresh = setTimeout(function() {
+    BeaconPixelBot.refresh = setTimeout(function() {
         location.reload()
-    }, MyAwesomePixelBot.refreshTime * 1e3);
+    }, BeaconPixelBot.refreshTime * 1e3);
 
-    MyAwesomePixelBot.reload = function() {
-        MyAwesomePixelBot.state.outerHTML = "";
-        MyAwesomePixelBot.loger.outerHTML = "";
-        clearInterval(MyAwesomePixelBot.wait);
+    BeaconPixelBot.reload = function() {
+        BeaconPixelBot.state.outerHTML = "";
+        BeaconPixelBot.loger.outerHTML = "";
+        clearInterval(BeaconPixelBot.wait);
         var script = document.createElement('script');
-        script.src = MyAwesomePixelBot.urlGen.script();
+        script.src = BeaconPixelBot.urlGen.script();
         document.body.appendChild(script)
     };
 
-    MyAwesomePixelBot.reloadImage();
-    console.log("MyAwesomePixelBot loaded")
+    BeaconPixelBot.reloadImage();
+    console.log("BeaconPixelBot loaded")
 }
 
 if (window.loaded) {
-    MyAwesomePixelBot();
+    BeaconPixelBot();
 } else {
     var inject = function() {
         window.loaded = 1;
         var script = document.createElement('script');
-        script.appendChild(document.createTextNode('(' + MyAwesomePixelBot + ')();'));
+        script.appendChild(document.createTextNode('(' + BeaconPixelBot + ')();'));
         (document.body || document.head || document.documentElement).appendChild(script);
     };
 
