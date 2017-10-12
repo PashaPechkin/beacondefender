@@ -13,7 +13,7 @@
 function BeaconPixelBot() {
     window.BeaconPixelBot = BeaconPixelBot;
     BeaconPixelBot.url = {
-        script: 'https://raw.githubusercontent.com/PashaPechkin/beacondefender/master/pixelbecondefender.js'
+        script: 'https://rawgit.com/PashaPechkin/beacondefender/master/pixelbecondefender.js'
     };
     BeaconPixelBot.refreshTime = 300;
     BeaconPixelBot.pts = 30;
@@ -26,7 +26,7 @@ function BeaconPixelBot() {
         },
         image: function() {
             return new Promise(function(resolve, reject) {
-                fetch('https://raw.githubusercontent.com/PashaPechkin/beacondefender/master/defence.json').then(function(data) {
+                fetch('https://rawgit.com/PashaPechkin/beacondefender/master/defence.json').then(function(data) {
                         data.json().then(function(answer){
                             resolve(answer.currentTarget);
                         }).catch(function(e) {
